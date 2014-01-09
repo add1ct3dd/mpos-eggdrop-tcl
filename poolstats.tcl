@@ -224,8 +224,8 @@ proc check_block {blockheight blockconfirmations} {
 }
 
 
-proc advertise_block {newblock laststatus lastshares lastfinder} {
-	global channels debug debugoutput scriptpath lastblockfile
+proc advertise_block {newblock laststatus lastshares lastfinder lastpercent} {
+	global channels debug debugoutput scriptpath lastblockfile coinname
 
   	# setting logfile to right path
   	set logfilepath $scriptpath
@@ -233,11 +233,11 @@ proc advertise_block {newblock laststatus lastshares lastfinder} {
   	
   	set lastblock [FileTextReadLine $logfilepath 0 0]
   	
-	if {$debug eq "1"} { putlog "New Block: $newblock" }
+	if {$debug eq "1"} { putlog "\[$coinname\] New Block: $newblock" }
 	if {$debug eq "1"} { putlog "New / Last: $newblock - $lastblock" }
 	
 	foreach advert $channels {
-		putquick "PRIVMSG $advert :New Block: #$newblock | Last Block: #$lastblock | $laststatus | $lastshares | $lastfinder"
+		putquick "PRIVMSG $advert :\[$coinname\] New Block: #$newblock | Last Block: #$lastblock | $laststatus | $lastshares | $lastfinder | $lastpercent"
 	}
 
 }
@@ -251,7 +251,7 @@ proc advertise_block {newblock laststatus lastshares lastfinder} {
 #
 
 proc user_info {nick host hand chan arg} {
- 	global apiurl apikey help_blocktime help_blocked channels debug debugoutput output
+ 	global apiurl apikey help_blocktime help_blocked channels debug debugoutput output coinname
 	package require http
 	package require json
 	package require tls
@@ -319,11 +319,9 @@ proc user_info {nick host hand chan arg} {
 	}
 	
 	if {$output eq "CHAN"} {
-		putquick "PRIVMSG $chan :User Info for $arg"
-		putquick "PRIVMSG $chan :$user_hashrate | $user_validround | $user_invalidround | $user_sharerate"
+		putquick "PRIVMSG $chan :\[$coinname\] User $arg: $user_hashrate | $user_validround | $user_invalidround | $user_sharerate"
 	} elseif {$output eq "NOTICE"} {
-		putquick "NOTICE $nick :User Info for $arg"
-		putquick "NOTICE $nick :$user_hashrate | $user_validround | $user_invalidround | $user_sharerate"
+		putquick "NOTICE $nick :\[$coinname\] User $arg: $user_hashrate | $user_validround | $user_invalidround | $user_sharerate"
 	} else {
 		putquick "PRIVMSG $chan :please set output in config file"
 	}
@@ -338,7 +336,7 @@ proc user_info {nick host hand chan arg} {
 #
 
 proc round_info {nick host hand chan arg } {
- 	global apiurl apikey help_blocktime help_blocked channels debug debugoutput output
+ 	global apiurl apikey help_blocktime help_blocked channels debug debugoutput output coinname
 	package require http
 	package require json
 	package require tls
@@ -426,11 +424,9 @@ proc round_info {nick host hand chan arg } {
 	set allshares [expr $shares_valid+$shares_invalid]
 
 	if {$output eq "CHAN"} {
-		putquick "PRIVMSG $chan :Actual Round"
- 		putquick "PRIVMSG $chan :$net_block | $net_diff | $shares_estimated | Sharecount: $allshares | Shares valid: $shares_valid | Shares invalid: $shares_invalid | $shares_progress"	
+ 		putquick "PRIVMSG $chan :\[$coinname\] Round Info: $net_block | $net_diff | $shares_estimated | Sharecount: $allshares | Shares valid: $shares_valid | Shares invalid: $shares_invalid | $shares_progress"	
 	} elseif {$output eq "NOTICE"} {
-		putquick "NOTICE $nick :Actual Round"
- 		putquick "NOTICE $nick :$net_block | $net_diff | $shares_estimated | Sharecount: $allshares | Shares valid: $shares_valid | Shares invalid: $shares_invalid | $shares_progress"	
+ 		putquick "NOTICE $nick :\[$coinname\] Round Info: $net_block | $net_diff | $shares_estimated | Sharecount: $allshares | Shares valid: $shares_valid | Shares invalid: $shares_invalid | $shares_progress"	
 	} else {
 		putquick "PRIVMSG $chan :please set output in config file"
 	}
@@ -445,7 +441,7 @@ proc round_info {nick host hand chan arg } {
 #
 
 proc last_info {nick host hand chan arg } {
- 	global apiurl apikey help_blocktime help_blocked channels debug debugoutput output
+ 	global coinname apiurl apikey help_blocktime help_blocked channels debug debugoutput output
 	package require http
 	package require json
 	package require tls
@@ -534,9 +530,9 @@ proc last_info {nick host hand chan arg } {
 	}
 	
  	if {$output eq "CHAN"} {
-		putquick "PRIVMSG $chan :$last_block | $last_confirmed | $last_difficulty | $last_timefound | $last_shares | $last_estshares | $last_finder"
+		putquick "PRIVMSG $chan :\[$coinname\] $last_block | $last_confirmed | $last_difficulty | $last_timefound | $last_shares | $last_estshares | $last_finder"
 	} elseif {$output eq "NOTICE"} {
-		putquick "NOTICE $nick :$last_block | $last_confirmed | $last_difficulty | $last_timefound | $last_shares | $last_estshares | $last_finder"
+		putquick "NOTICE $nick :\[$coinname\] $last_block | $last_confirmed | $last_difficulty | $last_timefound | $last_shares | $last_estshares | $last_finder"
 	} else {
 		putquick "PRIVMSG $chan :please set output in config file"
 	}
@@ -551,7 +547,7 @@ proc last_info {nick host hand chan arg } {
 #
 
 proc pool_info {nick host hand chan arg} {
-    global apiurl apikey help_blocktime help_blocked channels debug debugoutput output
+    global apiurl apikey help_blocktime help_blocked channels debug debugoutput output coinname
 	package require http
 	package require json
 	package require tls
@@ -615,11 +611,9 @@ proc pool_info {nick host hand chan arg} {
 	}
 	
  	if {$output eq "CHAN"} {
-		putquick "PRIVMSG $chan :Pool Stats"
-		putquick "PRIVMSG $chan :$pool_hashrate | $pool_efficiency | $pool_workers | $pool_nethashrate"	
+		putquick "PRIVMSG $chan :\[$coinname\] Pool Stats: $pool_hashrate | $pool_efficiency | $pool_workers | $pool_nethashrate"	
 	} elseif {$output eq "NOTICE"} {
-		putquick "NOTICE $nick :Pool Stats"
-		putquick "NOTICE $nick :$pool_hashrate | $pool_efficiency | $pool_workers | $pool_nethashrate"	
+		putquick "NOTICE $nick :\[$coinname\] Pool Stats: $pool_hashrate | $pool_efficiency | $pool_workers | $pool_nethashrate"	
 	} else {
 		putquick "PRIVMSG $chan :please set output in config file"
 	}
@@ -631,7 +625,7 @@ proc pool_info {nick host hand chan arg} {
 #
 
 proc block_info {nick host hand chan arg} {
-    global apiurl apikey help_blocktime help_blocked channels debug debugoutput output
+    global apiurl apikey help_blocktime help_blocked channels debug debugoutput output coinname
 	package require http
 	package require json
 	package require tls
@@ -706,11 +700,9 @@ proc block_info {nick host hand chan arg} {
 	}
 	
  	if {$output eq "CHAN"} {
-  		putquick "PRIVMSG $chan :Block Stats"
-		putquick "PRIVMSG $chan :$block_current | $block_next | $block_last | $block_diff | $block_time | $block_shares | $block_timelast"	
+		putquick "PRIVMSG $chan :\[$coinname\] Block Stats: $block_current | $block_next | $block_last | $block_diff | $block_time | $block_shares | $block_timelast"	
 	} elseif {$output eq "NOTICE"} {
-  		putquick "NOTICE $nick :Block Stats"
-		putquick "NOTICE $nick :$block_current | $block_next | $block_last | $block_diff | $block_time | $block_shares | $block_timelast"	
+		putquick "NOTICE $nick :\[$coinname\] Block Stats: $block_current | $block_next | $block_last | $block_diff | $block_time | $block_shares | $block_timelast"	
 	} else {
 		putquick "PRIVMSG $chan :please set output in config file"
 	}
