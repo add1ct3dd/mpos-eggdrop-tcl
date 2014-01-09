@@ -60,6 +60,8 @@ proc checknewblocks {} {
  	set last_finder "null"
  	set last_status "null"
  	set last_confirmations "null"
+	set last_percentage "null"
+	set last_estshares "null"
  	
   	set newurl $apiurl
   	append newurl $action
@@ -132,9 +134,12 @@ proc checknewblocks {} {
 									set last_status "Status: Valid | Confirmations: $elem_val2"
 								}
 							}
+							if {$elem2 eq "estshares"} { 
+								set last_percentage "Percentage: [expr {double(($last_shares / $elem_val2)*100)}] %"
+							}
 						}
 						
-						set advertise_block [check_block $last_block $last_confirmations]
+						set advertise_block [check_block $last_block $last_confirmations $last_percentage]
 						
 						if {$advertise_block eq "0"} {
 							#if {$debug eq "1"} { putlog "No New Block: $last_block" }
@@ -143,7 +148,7 @@ proc checknewblocks {} {
 							#if {$debug eq "1"} { putlog "Block not confirmed" }
 						} else {
 							set writeblockfile "yes"
-							advertise_block $last_block $last_status $last_shares $last_finder
+							advertise_block $last_block $last_status $last_shares $last_finder $last_percentage
 							lappend blocklist $last_block
 						}
 						
