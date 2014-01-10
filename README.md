@@ -44,10 +44,7 @@ lines at the end of your eggdrop.conf
 #
 source scripts/mininginfo/http.tcl
 source scripts/mininginfo/config.tcl
-source scripts/mininginfo/bothelp.tcl
 source scripts/mininginfo/poolstats.tcl
-source scripts/mininginfo/users.tcl
-source scripts/mininginfo/marketdata.tcl
 </pre>
 
 USAGE
@@ -57,16 +54,13 @@ If you are on IRC and the Bot sits in your channel, type one of the following co
 communicate with the bot and get the output right in the channel
 
 <pre>
-!adduser ircnick mposuser password       - Adding User to userfile"
-!deluser ircnick mposuser password       - Deleting User from userfile"
-!block                                   - Blockstats
-!pool                                    - Pool Information
-!round                                   - Actual Round Information
-!last                                    - Information about last found Block
-!user username                           - Information about a specific User
-!worker username                         - Workers for specific User
-!balance username                        - Get User Wallet Balance
-!price                                   - Get actual Coinprice
+!block <coin>                            - Blockstats
+!pool <coin>                             - Pool Information
+!round  <coin>                           - Actual Round Information
+!last  <coin>                            - Information about last found Block
+!user username  <coin>                   - Information about a specific User
+!worker username  <coin>                 - Workers for specific User
+!balance username  <coin>                - Get User Wallet Balance
 !help                                    - This help text
 </pre>
 
