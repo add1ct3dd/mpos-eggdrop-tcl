@@ -7,32 +7,33 @@
 # General Config
 ##################################################################
 
-set ns "$coinname"
+set ns "COINNAME"
 namespace eval $ns {
+	unset ::ns
 
-	set scriptversion "v0.7"
+	variable scriptversion "v0.7"
 
 	# time to wait before next command in seconds
 	#
-	set help_blocktime "5"
+	variable help_blocktime "5"
 
 	# debug mode
 	# set to 1 to display debug messages in partyline and logfile
 	#
-	set debug "0"
+	variable debug "0"
 
 	# debug output
 	# set to 1 to display json output
 	# beware, lots of data
 	#
-	set debugoutput "0"
+	variable debugoutput "0"
 
 	# setting the output style
 	#
 	# -> CHAN   - put all infos in channel
 	# -> NOTICE - sends notice to the user who triggered the command
 	#
-	set output "CHAN"
+	variable output "CHAN"
 
 	# script path
 	# 
@@ -41,11 +42,11 @@ namespace eval $ns {
 	# if your script is installed in /usr/src/eggdrop/scripts/mininginfo/
 	# scriptpath is "./scripts/mininginfo/"
 	# 
-	set scriptpath "./scripts/mininginfo/"
+	variable scriptpath "./scripts/mininginfo/"
 
 	# channels to advertise new block information
 	#
-	set channels "#channel1 #channel2"
+	variable channels "#channel1 #channel2"
 
 
 	##################################################################
@@ -54,33 +55,33 @@ namespace eval $ns {
 
 	# url where mpos is installed
 	#
-	set apiurl "https://yourmposapiurl/"
+	variable apiurl "https://yourmposapiurl/"
 
 	# api key from mpos
 	#
-	set apikey "YOURMPOSAPIKEY"
+	variable apikey "YOURMPOSAPIKEY"
 
 	# setting coin name
 	#
-	set coinname "LTC"
+	variable coinname "LTC"
 
 	# file to save last blocks
 	#
-	set lastblockfile "lastblock"
+	variable lastblockfile "lastblock"
 
 	# file to save users
 	#
-	set registereduserfile "mposuser"
+	variable registereduserfile "mposuser"
 
 	# confirmations before a block will be advertised
 	#
-	set confirmations "10"
+	variable confirmations "10"
 
 	# interval to check for new blocks in seconds
 	# if set to 0, the bot will do no automatic
 	# check for new blocks in seconds
 	#
-	set blockchecktime "60"
+	variable blockchecktime "60"
 
 	######################################################################
 	##########           nothing to edit below this line        ##########
