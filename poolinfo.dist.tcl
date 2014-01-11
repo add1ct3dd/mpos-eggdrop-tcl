@@ -112,7 +112,7 @@ namespace eval $ns {
 		if {![info exists checknewblocks_running]} {
 			if {$debug eq "1"} { putlog "Timer active" }
 			
-			utimer $blockchecktime checknewblocks
+			utimer $blockchecktime [namespace current]::checknewblocks
 			set checknewblocks_running 1
 		}
 	}
@@ -184,7 +184,7 @@ namespace eval $ns {
 
 			if {[catch { set results [ [::json::json2dict $data] ]
 				if {$debug eq "1"} { putlog "no data: $data" }
-				utimer $blockchecktime checknewblocks
+				utimer $blockchecktime [namespace current]::checknewblocks
 				return 0
 			}]} {
 				if {$debug eq "1"} { putlog "data found" }
