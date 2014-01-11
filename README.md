@@ -8,6 +8,21 @@ This script is an addon for the popular eggdrop <a href="http://www.eggheads.org
 and gets API Data from <a href="https://github.com/TheSerapher/php-mpos" target="_blank">MPOS</a>, 
 a fantastic Webinterface for people running Cryptocoin Pools
 
+
+New Features
+================
+The original script was a very good start, but many pool operators run more than one pool. 
+This meant a lot spam or "dust" would be created in chat by having to use multiple bots to view 
+this information for more than one pool. 
+
+I'm updating this script to try and fix that, and here's the main features:
+
+* Single-file (ignoring http.tcl pre-requisite) per instance
+* Fully Namespaced code which will not interfer with anything else.
+* More intuitive data returned
+* Coin/Pool-specific commands (such as !last <coin>)
+
+
 Active Pools
 ================
 
