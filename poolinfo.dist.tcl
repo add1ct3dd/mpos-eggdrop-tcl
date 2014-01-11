@@ -1194,8 +1194,7 @@ namespace eval $ns {
 	   } 
 	   set out 
 	}
+	
+	putlog "===>> Mining-Pool-Stats - Version $scriptversion loaded"
 
 }
-
-
-putlog "===>> Mining-Pool-Stats - Version $scriptversion loaded"
