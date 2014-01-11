@@ -6,8 +6,10 @@
 ##################################################################
 # General Config
 ##################################################################
-
+#
+# set as something unique, same value as coinname is fine.
 set ns "COINNAME"
+
 namespace eval $ns {
 	unset ::ns
 
