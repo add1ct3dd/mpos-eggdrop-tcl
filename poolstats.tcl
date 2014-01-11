@@ -119,7 +119,16 @@ namespace eval $ns {
 	#
 
 	proc checknewblocks {} {
-		variable blockchecktime channels apiurl apikey debug debugoutput confirmations scriptpath lastblockfile
+		variable blockchecktime 
+		variable channels 
+		variable apiurl 
+		variable apikey 
+		variable debug 
+		variable debugoutput 
+		variable confirmations 
+		variable scriptpath 
+		variable lastblockfile
+		
 		package require http
 		package require json
 		package require tls
@@ -240,14 +249,18 @@ namespace eval $ns {
 			putlog "No New Block found - $lastblock"
 		}
 
-		utimer $blockchecktime checknewblocks
+		utimer $blockchecktime [namespace current]::checknewblocks
 	}                                      
 	  
 
 
 
 	proc check_block {blockheight blockconfirmations} {
-		variable debug debugoutput confirmations scriptpath lastblockfile
+		variable debug 
+		variable debugoutput 
+		variable confirmations 
+		variable scriptpath 
+		variable lastblockfile
 		
 		#if {$debug eq "1"} { putlog "Checking Block: $blockheight" }
 
@@ -300,7 +313,12 @@ namespace eval $ns {
 
 
 	proc advertise_block {newblock laststatus lastshares lastfinder} {
-		variable channels debug debugoutput scriptpath lastblockfile coinname
+		variable channels 
+		variable debug 
+		variable debugoutput 
+		variable scriptpath 
+		variable lastblockfile 
+		variable coinname
 
 		# setting logfile to right path
 		set logfilepath $scriptpath
@@ -326,7 +344,15 @@ namespace eval $ns {
 	#
 
 	proc user_info {nick host hand chan arg} {
-		variable apiurl apikey help_blocktime help_blocked channels debug debugoutput output coinname
+		variable apiurl 
+		variable apikey 
+		variable help_blocktime 
+		variable help_blocked 
+		variable channels debug 
+		variable debugoutput 
+		variable output 
+		variable coinname
+		
 		package require http
 		package require json
 		package require tls
@@ -402,7 +428,7 @@ namespace eval $ns {
 		}
 
 		set help_blocked($mask) 1
-		utimer $help_blocktime [ list unset help_blocked($mask) ]
+		utimer $help_blocktime [ list unset [namespace current]::help_blocked($mask) ]
 
 	}
 
@@ -411,7 +437,16 @@ namespace eval $ns {
 	#
 
 	proc round_info {nick host hand chan arg } {
-		variable apiurl apikey help_blocktime help_blocked channels debug debugoutput output coinname
+		variable apiurl
+		variable apikey 
+		variable help_blocktime 
+		variable help_blocked 
+		variable channels 
+		variable debug 
+		variable debugoutput 
+		variable output 
+		variable coinname
+		
 		package require http
 		package require json
 		package require tls
@@ -507,7 +542,7 @@ namespace eval $ns {
 		}
 		
 		set help_blocked($mask) 1
-		utimer $help_blocktime [ list unset help_blocked($mask) ]
+		utimer $help_blocktime [ list unset [namespace current]::help_blocked($mask) ]
 
 	}
 
@@ -516,7 +551,16 @@ namespace eval $ns {
 	#
 
 	proc last_info {nick host hand chan arg } {
-		variable coinname apiurl apikey help_blocktime help_blocked channels debug debugoutput output
+		variable coinname 
+		variable apiurl 
+		variable apikey 
+		variable help_blocktime 
+		variable help_blocked 
+		variable channels 
+		variable debug 
+		variable debugoutput 
+		variable output
+		
 		package require http
 		package require json
 		package require tls
@@ -613,7 +657,7 @@ namespace eval $ns {
 		}
 		
 		set help_blocked($mask) 1
-		utimer $help_blocktime [ list unset help_blocked($mask) ]
+		utimer $help_blocktime [ list unset [namespace current]::help_blocked($mask) ]
 
 	}
 
@@ -622,7 +666,16 @@ namespace eval $ns {
 	#
 
 	proc pool_info {nick host hand chan arg} {
-		variable apiurl apikey help_blocktime help_blocked channels debug debugoutput output coinname
+		variable apiurl 
+		variable apikey 
+		variable help_blocktime 
+		variable help_blocked 
+		variable channels 
+		variable debug 
+		variable debugoutput 
+		variable output 
+		variable coinname
+		
 		package require http
 		package require json
 		package require tls
@@ -700,7 +753,16 @@ namespace eval $ns {
 	#
 
 	proc block_info {nick host hand chan arg} {
-		variable apiurl apikey help_blocktime help_blocked channels debug debugoutput output coinname
+		variable apiurl 
+		variable apikey 
+		variable help_blocktime 
+		variable help_blocked 
+		variable channels 
+		variable debug 
+		variable debugoutput 
+		variable output 
+		variable coinname
+		
 		package require http
 		package require json
 		package require tls
@@ -789,7 +851,15 @@ namespace eval $ns {
 	#
 
 	proc worker_info {nick host hand chan arg} {
-		variable apiurl apikey help_blocktime help_blocked channels debug debugoutput output
+		variable apiurl 
+		variable apikey 
+		variable help_blocktime 
+		variable help_blocked 
+		variable channels 
+		variable debug 
+		variable debugoutput 
+		variable output
+		
 		package require http
 		package require json
 		package require tls
@@ -889,7 +959,15 @@ namespace eval $ns {
 	#
 
 	proc balance_info {nick host hand chan arg} {
-		variable apiurl apikey help_blocktime help_blocked channels debug debugoutput output coinname
+		variable apiurl 
+		variable apikey 
+		variable help_blocktime 
+		variable help_blocked 
+		variable channels debug 
+		variable debugoutput 
+		variable output 
+		variable coinname
+		
 		package require http
 		package require json
 		package require tls
